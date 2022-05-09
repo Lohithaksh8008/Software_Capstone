@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+
+    <meta charset="utf-8">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- METADATA -->
+    <title>Commerce Bank | Banking, Checking, Savings, Mortgages &amp; More</title>
+    <meta name="description" content="Commerce Bank offers personal and business banking, checking, mortgages, loans, investing, credit cards &amp; more. Visit us online or at one of our locations." />
+    <meta name="keywords" content="" />
+    <meta property="og:title" content="Commerce Bank | Banking, Checking, Savings, Mortgages &amp; More" />
+    <meta property="og:type" content="article" />
+    <meta property="og:image" content="" />
+    <meta property="og:description" content="Commerce Bank offers personal and business banking, checking, mortgages, loans, investing, credit cards &amp; more. Visit us online or at one of our locations." />
+    <meta property="og:url" content="/" />
+    <link rel="icon" href="static/-/media/cb/images/global/favicon.ico?revision=3e33187d-4bad-4881-8705-dcdd88318311&amp;modified=20181012174823" type="image/x-icon">
+    <link id="canonicalUrl" rel="canonical" href="https://www.commercebank.com" />
+
+    <link rel="stylesheet" href="static/Styles/cb.v-dliqtv4029eyc7jy5mafq.css">
+    <link rel="stylesheet" href="static/Styles/cb-footer.v-ekz5fdp0vdepykg5dgigxq.css" />
+    <link rel="preload" as="font" href="static/Styles/cerapro-regular-webfont.v-gcdfbgkixjaxdvnipfwl1a.woff2" type="font/woff2" crossorigina="anonymous">
+    <link rel="preload" as="font" href="static/Styles/cerapro-regularitalic-webfont.v-bcwjn8yk5kpbfydnbwvvng.woff2" type="font/woff2" crossorigina="anonymous">
+    <link rel="preload" as="font" href="Styles/cerapro-medium-webfont.v-61oqyxrun0ctqvqn5jxjmq.woff2" type="font/woff2" crossorigina="anonymous">
+    <link rel="preload" as="font" href="static/Styles/cerapro-bold-webfont.v-o8qgb9cgdwqubxnbueiasa.woff2" type="font/woff2" crossorigina="anonymous">
+    <link rel="preload" as="font" href="static/fonts/cb-icomoon.v-ojdvz2lnhpm91z0cyglsow.eot" type="font/embedded-opentype" crossorigina="anonymous">
+    <link rel="preload" as="font" href="static/fonts/cb-icomoon.v-xgo0obbfc1cwsl8oqrggvw.svg" type="font/svg" crossorigina="anonymous">
+
+    <link rel="stylesheet" href="static/Styles/cc-cb.v-shxvleyoyif2jecmvkoxa.css">
+    <link rel="stylesheet" href="static/Styles/cc-ratings.v-f4pqzixgcgo6ayrfgwjirw.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <!-- Required for navigation -->
+    <link rel="stylesheet" href="static/Styles/navigation/cb-nav.v-1lrukvukhwvdkeu8oxvesg.css" />
+    <link rel="stylesheet" href="static/Styles/navigation/cb-login-box.v-vwout5zaspc8xsexugta.css" />
+    <script src="static/Scripts/navigation/jquery/jquery-3.5.1.min.v-thqm4tanibnua1tbidpww.js"></script>
+    <link rel="stylesheet" href="static/Styles/navigation/4.3.1/bootstrap.min.v-0ydrdbjmsdsb9hcfyrcia.css" />
+    <!-- END -->
+
+    <link rel="stylesheet" href="static/Styles/cb-workday.v-mqphl98oj1wusydqubni0q.css">
+    <link rel="stylesheet" href="static/Styles/icofont-direction.v-u8pmhhxb3qneyi1bth7xwa.css">
+
+
+</head>
+<body>
+	<center><BR><BR><BR><BR><BR><BR><BR><BR>
+		<h3 style="color:green">Transactions History</h3>
+<!--		<h2>Table to CSV converter</h2>-->
+
+
+
+		<table border="1" cellspacing="0" cellpadding="10" style="width:900px;">
+			<tr>
+				<th style="color:#006747">Receiver Name</th>
+							<th style="color:#006747">Account Number</th>
+							<th style="color:#006747">Category</th>
+                          <th style="color:#006747">Transaction</th>
+                          <th style="color:#006747">Amount</th>
+                            <th style="color:#006747">Date</th> </tr>
+			</tr>
+
+             {% for r in row_val %}
+<tr>
+						{% for v in r %}
+
+					<td style="color:black; border: 2px solid white">{{ v }}</td>
+
+						{% endfor %}
+
+</tr>
+
+          {% endfor %}
+		</table>
+
+
+
+
+		<button type="button" onclick="tableToCSV()">
+			download CSV
+		</button>
+       &nbsp;&nbsp;&nbsp;&nbsp; <a href="{{url_for('trans')}}">Go Back</a>
+	</center>
+
+	<script type="text/javascript">
+		function tableToCSV() {
+
+			// Variable to store the final csv data
+			var csv_data = [];
+
+			// Get each row data
+			var rows = document.getElementsByTagName('tr');
+			for (var i = 0; i < rows.length; i++) {
+
+				// Get each column data
+				var cols = rows[i].querySelectorAll('td,th');
+
+				// Stores each csv row data
+				var csvrow = [];
+				for (var j = 0; j < cols.length; j++) {
+
+					// Get the text data of each cell
+					// of a row and push it to csvrow
+					csvrow.push(cols[j].innerHTML);
+				}
+
+				// Combine each column value with comma
+				csv_data.push(csvrow.join(","));
+			}
+
+			// Combine each row data with new line character
+			csv_data = csv_data.join('\n');
+
+			// Call this function to download csv file
+			downloadCSVFile(csv_data);
+
+		}
+
+		function downloadCSVFile(csv_data) {
+
+			// Create CSV file object and feed
+			// our csv_data into it
+			CSVFile = new Blob([csv_data], {
+				type: "text/csv"
+			});
+
+			// Create to temporary link to initiate
+			// download process
+			var temp_link = document.createElement('a');
+
+			// Download csv file
+			temp_link.download = "Transactions.csv";
+			var url = window.URL.createObjectURL(CSVFile);
+			temp_link.href = url;
+
+			// This link should not be displayed
+			temp_link.style.display = "none";
+			document.body.appendChild(temp_link);
+
+			// Automatically click the link to
+			// trigger download
+			temp_link.click();
+			document.body.removeChild(temp_link);
+		}
+	</script>
+</body>
+
+</html>
